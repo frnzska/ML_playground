@@ -15,4 +15,4 @@ class rnn:
         self.W = tf.Variable(tf.random_normal([n_hidden, vocab_size]))
         self.b =  tf.Variable(tf.random_normal([vocab_size]))
         self.n_inputs = n_inputs
-
+        self.rnn_cell = rnn.BasicLSTMCell(n_hidden)
