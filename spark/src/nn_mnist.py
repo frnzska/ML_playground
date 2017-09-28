@@ -15,7 +15,7 @@ def get_data(test_set='s3://franziska-adler-emr/data/mnist/mnist_test.csv',
     return test, train
 
 def prepare_data(test, train):
-    # prepare vectors: spark wants vectors called features
+    # prepare vectors: Spark wants vectors called features
     train = train.withColumnRenamed("_c0", "label")
     test = test.withColumnRenamed("_c0", "label")
     feature_cols = ["_c" + str(i) for i in range(1, 784)]
@@ -24,3 +24,27 @@ def prepare_data(test, train):
     test = assembler.transform(test).select('label', 'features')
     return test, train
 
+
+dims_in = 783
+dims_out = 10
+n_hidden = 100
+layers = [dims_in, n_hidden, dims_out]
+maxIter = 100
+learning_rate = 1e-7
+
+test, train = get_data()
+test, train = prepare_data(test, train)
+
+trainer = MultilayerPerceptronClassifier(maxIter=maxIter, layers=layers, blockSize=128, seed=1234, tol=learning_rate)
+model = trainer.fit(train)
+
+result = model.transform(test)
+predictionAndLabels = result.select("prediction", "label")
+evaluator = MulticlassClassificationEvaluator(metricName="accuracy")
+print("Test set accuracy = " + str(evaluator.evaluate(predictionAndLabels)))
+
+
+spark.stop()
+
+# ssh hadoop@xyzMaster
+# /usr/lib/Spark/bin/Spark-submit
