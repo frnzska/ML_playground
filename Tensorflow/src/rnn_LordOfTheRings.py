@@ -1,8 +1,8 @@
 import os
-from tensorflow.src.utils.text_processing import text_to_idx_dict
+from Tensorflow.src.utils.text_processing import text_to_idx_dict
 import tensorflow as tf
 
-cwd, data_path = os.getcwd(), 'tensorflow/data/text_data/lord_of_the_rings.txt'
+cwd, data_path = os.getcwd(), 'Tensorflow/data/text_data/lord_of_the_rings.txt'
 path = f'{cwd}/{data_path}'
 raw_data = open(path).read()
 

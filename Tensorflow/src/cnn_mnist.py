@@ -1,6 +1,6 @@
 import tensorflow as tf
 import os
-cwd, data_path = os.getcwd(), 'tensorflow/data/MNIST_data/'
+cwd, data_path = os.getcwd(), 'Tensorflow/data/MNIST_data/'
 mnist_path = f'{cwd}/{data_path}'
 print(mnist_path)
 import logging
@@ -12,6 +12,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+import time
+print('start timeing')
+t1 = time.time()
 
 
 class CNN:
@@ -175,7 +178,11 @@ class CNN:
         return tf.Variable(initial)
 
 
-#a = CNN(image_height=28, image_width=28, dims_out=10, n_filters_per_layer= [30,60], filter_sizes=[5,5], pooling_sizes=[2,2], learning_rate=0.0001)
-#a._connect_conv_layers()
-#a._y()
-#a.train()
+
+#a = CNN(image_height=28, image_width=28, dims_out=10, n_filters_per_layer= [100,80], filter_sizes=[5,5], pooling_sizes=[2,2], learning_rate=0.0001)
+a = CNN(image_height=28, image_width=28, dims_out=10, n_filters_per_layer= [30,60], filter_sizes=[5,5], pooling_sizes=[2,2], learning_rate=0.0001)
+a._connect_conv_layers()
+a._y()
+a.train()
+
+print('time taken: ', str(time.time() - t1))

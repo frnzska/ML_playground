@@ -37,7 +37,7 @@ class mlp:
         for i in range(10000):
             batch_xs, batch_ys = mnist.train.next_batch(100)
             sess.run(train_step, feed_dict={x_ph: batch_xs, y_real_ph: batch_ys})
-            if i % 100 == 0:
+            if i % 500 == 0:
                 print('step: ', i)
                 correct_prediction = tf.equal(tf.argmax(y_real_ph, 1), tf.argmax(y_predict, 1))
                 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
@@ -47,4 +47,10 @@ class mlp:
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
         print(sess.run(accuracy, feed_dict={x_ph: mnist.test.images, y_real_ph: mnist.test.labels}))
 
-mlp(dims_in=784, dims_out=10, n_hidden=10).train()
+
+import time
+print('start timeing')
+t1 = time.time()
+
+mlp(dims_in=784, dims_out=10, n_hidden=500).train()
+print('time taken: ', str(time.time() - t1))
